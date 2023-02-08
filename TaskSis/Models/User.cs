@@ -11,6 +11,6 @@
 			Name = _Name;
 			Email = _Email;
 		}
-		
+
 	}
 }

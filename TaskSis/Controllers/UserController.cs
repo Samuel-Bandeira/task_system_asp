@@ -1,24 +1,25 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System.Net;
+﻿using Microsoft.AspNetCore.Mvc;
+using TaskSis.Interfaces;
 using TaskSis.Models;
-using TaskSis.Repositories;
 
 namespace TaskSis.Controllers
 {
-	[Route("api/[controller]")]
+	[Route("/user")]
 	[ApiController]
 	public class UserController : ControllerBase
 	{
-		private readonly UserRepository _userRepo;
-		public UserController(UserRepository repoCtx)
+		private readonly IUserService _userService;
+		private readonly ILogger<UserController> _logger;
+		public UserController(IUserService userService, ILogger<UserController> logger)
 		{
-			_userRepo = repoCtx;
+			_userService = userService;
+			_logger = logger;
 		}
-		[HttpGet]
-		public ActionResult<List<User>> findUsers(HttpRequestMessage request)
+		[HttpGet("all")]
+		public List<User> findUsers()
 		{
-			return _userRepo.getUsers();
+			List<User> users = _userService.getAll();
+			return users;
 		}
 	}
 }
