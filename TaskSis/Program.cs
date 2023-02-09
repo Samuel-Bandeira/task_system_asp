@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+using TaskSis.Context;
 using TaskSis.Interfaces;
 using TaskSis.Repositories;
 using TaskSis.Services;
@@ -16,6 +18,9 @@ namespace TaskSis
 			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 			builder.Services.AddEndpointsApiExplorer();
 			builder.Services.AddSwaggerGen();
+
+			string mySqlConnection = builder.Configuration.GetConnectionString("DefaultConnection");
+			builder.Services.AddDbContext<AppDbContext>(options => options.UseMySql(mySqlConnection, ServerVersion.AutoDetect(mySqlConnection)));
 
 			var app = builder.Build();
 
